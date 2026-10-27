@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:b8bd63a3c07e04db2fd260d2e91f2c712d4d658850489a38e4cd9d5441808c09",
+  "claims": [
+    {
+      "id": "claim_0a9515e5bc944cd09704ca8d1bcd26d6",
+      "statement": "The desktop application detects an open TCP port starting from 8501, boots FastAPI via uvicorn in a background thread, and opens an embedded PyWebView window with Edge Chromium fallback.",
+      "evidence": [
+        {
+          "resource": "repo://desktop.py#L12-L18",
+          "version": "repo-lines-v1:sha256:a32a12e0650b221e0b36b8ac5ae8984bc9972c7fd18cd9f63e899095d991426d:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzFjNGQxN2QzMTcwMWU0NWJiNmEzNWNkYzdhNWJlMzkxYTc0MTRmMTMwYTRjZGVmZDllMjU0NmE1NTlhNmQ2NCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2ViNzAyNTc1OTNkYTA2ZjY4MmEzZGRkYTU0YTlkMjYwZDRmYzUxNGY2NDUyMzdmNWNhNzRiMDhmOGRhNjFhNiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMmIwYTA0MzVhN2E0ZDc1NGY2Y2ZkYjI3YTBjMDY0NDRiNjUyYjY2YTY2OTVhZjkxZDdiOTNlNmM0NTBmMTYwOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMGEzMTQwNDE2M2I1YmJmMDMyNGZhOTJlYzhhZDBlMzY4ZjQzY2M4MDhlNThmYjc3ZDAzNTI4MzgwMTBmYmVlMSJ9"
+        },
+        {
+          "resource": "repo://desktop.py#L48-L105",
+          "version": "repo-lines-v1:sha256:411131620fdf72a11a01b07773bfb4582c3ff2a58418483e970c2eaf612617fc:eyJzZWxlY3RlZExpbmVDb3VudCI6NTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNjNWI5NDg0N2MxMDUzYTZmMGRkYjIwMDc2N2ZhMDA2NDJhZWRlMTRmMWUwZjBhNDIyZjJmYWM4NGM2ZDI2ZjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUwNjY2MTk3ZmU1MzE2YWYzMTYxMTViMWI0MWQ3ZTM2ZjE5YWM1MjNjNmJkZDVmZDJkODE2YmJiODUwYzQwNmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFkMmMzOGMwY2E2MzNjZjY0MGZhNDg3NDYxYzcyZGYyNjQxZTRkMWVkNDQzNzRjZDI2Yzc2MmUzYmJkMzIzYjAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY2OWUwNmQ5NDcxM2M4ZWY0ZjMxODhmYWY4Y2JmMmMzMjVkOGVlMWFjNjhkYTdhOWY5NzQ3YzgwNWU5YmUxYzgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a87f3edce90c4ad29f9b63a3bb099ec2",
+      "statement": "The /api/thumbnail endpoint generates and persists JPEG thumbnails scaled via Lanczos resampling into a disk cache for images and PyAV video timestamps.",
+      "evidence": [
+        {
+          "resource": "repo://server/api.py#L218-L272",
+          "version": "repo-lines-v1:sha256:f04acdb8e1a2f42a8c436c4dc1863ebcc3e8de94094cb0617e4c04c5d2b47e20:eyJzZWxlY3RlZExpbmVDb3VudCI6NTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM0NTE2MDZkMzUzYzQwM2IxYmU4ZDA5MmZkN2M5YzhmMjJhZDM1MzBiMmYxODVlMzc3OGU3OGZhMTRlY2RmOGYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg3OTQ2NjUzMzY3M2E0NTNlZDZiZWY2NmM5ZDY4NDZmYzI4ZjlhMWEyNDI3YzgzY2Q4ZDExZmViZWUwNGUzZWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ1MDY0MWVjZjQwZWEwNThlYjc1NjFiNjBjZTczODA0ZTFlZWM0MjNiMDRmNDczZGUzZTU0ZTJmNzU5NjVhMTAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_aafbf28c6d9a4271a1245188523c09c6",
+      "statement": "The /api/search-media endpoint accepts multipart file uploads for images, audio, and video, supports negative concepts, and queries the vector searcher.",
+      "evidence": [
+        {
+          "resource": "repo://server/api.py#L298-L377",
+          "version": "repo-lines-v1:sha256:f4499216d4a16c8e6042d53c63ff775947e6d4d15f2f9e42dc3b916f1185ad22:eyJzZWxlY3RlZExpbmVDb3VudCI6ODAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVmY2I4NzJhZTQzM2U5NDFlZThiNmExYmZiNDY0ODQ1MDk2NWRlMDMzMzM0ZjJjMjFmZDllNmNlM2M2OTUxNWIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFlMDk2OWJmNzdiZThjMjNiNjM0MGM3YjdiZGJiYzg5YzVhM2Y0MDAwMjliNDEyZDhjYmIxZjk4Y2Y1MjIyMDkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBhMWM3N2JhNDQyYTg4NzhlYTM0MzBkOTBkYmQxM2U5ZDg3NWFjOTA0ZDk1NDNiMzNmZTMwZDhiYzI0NDExNGUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFmZmE4YmFkOWY5Y2E5ODFjN2I2MjgwN2E4ZTliYzY5MWY0ZmM2N2JlODg2NDE4ODljMDRiNDlkYzQwZWRmNGEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_85e58c8c0d824c248ae407fc9b358f40",
+      "statement": "Folder management endpoints allow browsing via Tkinter dialog, persisting directories to AppConfig, and initiating automatic incremental indexing.",
+      "evidence": [
+        {
+          "resource": "repo://server/api.py#L102-L177",
+          "version": "repo-lines-v1:sha256:238c4d48682d89dc1dcd452d0120b00a2d1a1119d7d7c9f0641cc471c69e8a5f:eyJzZWxlY3RlZExpbmVDb3VudCI6NzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUwMzMwYjY5YWUxZmU4ZTE3ZjE0MTJmYTYwNWI0YzdkNWIyMWUzMTI5MWIwNWNiM2EzMDM1ZmRkZWY5ZWExNmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg1YzhhMjA4M2YzODhkNzYxN2JiZjZiODEzZmY0ZmVlMzM1OGQ3ZWM2NWQ4OTc2MGE5NTE3ODhmMjcyNGRhNmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU5MzdmYjA3OGMyODFhN2I5NDNhZTNhNzE2YmNjNjNjYjRlZWQ2ZGNiY2E3NTZkNTc2ODNiMWNlMjA4ODUzNjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFmYmIyZmM2YjA1ZTY1MzdhNTE1MjRlOGI3ZTIxZDQxMDU2NjA5YzM4OTUwNTcwYWJkYWI5NmU3YTlmZGZlNTYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d45d297e6fed423bbf9aae94f06e6fb1",
+      "statement": "Native Windows shell integration invokes explorer.exe with explicit command strings to select files without explorer argument mangling.",
+      "evidence": [
+        {
+          "resource": "repo://server/api.py#L432-L448",
+          "version": "repo-lines-v1:sha256:7110b402eb008d7c6ba0fffdaf51856936f65c72c9baf3a7a4057fe513b47f70:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA3MGZjZjU1MWQ5ODUyN2U3ZDQzNjUzNWM2NzRjN2UyZTNhODJlYTc3MDA4MDhkMTU5YjYzNTE4NDUxNjkwYWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhMGM4MDg0NDBmZTYxMmJmZTYyNDNiY2I1MjM1MTJmY2E4NTIyZThiNjE0Yzg3MDg1ZWYxMTUzNDI5ZmEyOWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQzZmJiYjIyNGNlMWQwYTA1MTAwMzM5YjU2OGIzZGZiMGEzYTQ5NGMzNjEzNTk3NWFiOTJiZGU0ZGQxZjkwMjgifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-10-27T03:41:19.738Z"
+  }
+}

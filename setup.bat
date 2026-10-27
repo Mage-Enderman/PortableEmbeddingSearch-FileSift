@@ -16,12 +16,12 @@ if %errorlevel% equ 0 (
     where nvidia-smi >nul 2>nul
     if %errorlevel% equ 0 (
         echo [Setup] NVIDIA GPU detected! Installing PyTorch with CUDA acceleration...
-        uv pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
+        uv pip install torch torchvision --index-url https://download.pytorch.org/whl/cu124
     )
     
     echo [Setup] Installing remaining dependencies...
     uv pip install -r requirements.txt
-    goto done
+    goto cleanup
 )
 
 REM 2. Fallback to standard python
@@ -35,17 +35,24 @@ if %errorlevel% equ 0 (
     where nvidia-smi >nul 2>nul
     if %errorlevel% equ 0 (
         echo [Setup] NVIDIA GPU detected! Installing PyTorch with CUDA acceleration...
-        .venv\Scripts\python -m pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
+        .venv\Scripts\python -m pip install torch torchvision --index-url https://download.pytorch.org/whl/cu124
     )
     
     .venv\Scripts\python -m pip install -r requirements.txt
-    goto done
+    goto cleanup
 )
 
 echo [Setup ERROR] Neither uv nor python was found in PATH!
 echo Please install Python (3.11 or 3.12) or uv from https://astral.sh/uv
 pause
 exit /b 1
+
+:cleanup
+REM Remove ~800MB of static compile-time export libraries in PyTorch wheel not used by Python runtime
+if exist ".venv\Lib\site-packages\torch\lib\*.lib" (
+    echo [Setup] Pruning unused static .lib compile archives to save ~800MB...
+    del /f /q ".venv\Lib\site-packages\torch\lib\*.lib" >nul 2>nul
+)
 
 :done
 echo =======================================================

@@ -68,6 +68,7 @@ class AppConfig(BaseModel):
     auto_reindex_on_startup: bool = True
     theme: str = "dark"
     device: str = "auto"  # "auto", "cuda", or "cpu"
+    first_run_completed: bool = False
 
     @classmethod
     def load(cls) -> "AppConfig":

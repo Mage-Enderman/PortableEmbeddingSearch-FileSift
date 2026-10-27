@@ -39,6 +39,24 @@ document.addEventListener("DOMContentLoaded", () => {
   const indexPctLabel = document.getElementById("index-pct-label");
   const indexCurrentFile = document.getElementById("index-current-file");
   const cancelIndexBtn = document.getElementById("cancel-index-btn");
+  const pauseIndexBtn = document.getElementById("pause-index-btn");
+
+  // Setup Wizard Elements
+  const setupWizardModal = document.getElementById("setup-wizard-modal");
+  const wizardStep1 = document.getElementById("wizard-step-1");
+  const wizardStep2 = document.getElementById("wizard-step-2");
+  const wizardStep3 = document.getElementById("wizard-step-3");
+  const wizardSuggestedList = document.getElementById("wizard-suggested-list");
+  const wizardBrowseBtn = document.getElementById("wizard-browse-btn");
+  const wizardEstBadge = document.getElementById("wizard-est-badge");
+  const wizardEstText = document.getElementById("wizard-est-text");
+  const wizardBackBtn = document.getElementById("wizard-back-btn");
+  const wizardNextBtn = document.getElementById("wizard-next-btn");
+
+  let wizardStep = 1;
+  let wizardSelectedPaths = new Set();
+  let wizardSuggestedData = [];
+
 
   const previewDrawer = document.getElementById("preview-drawer");
   const closeDrawerBtn = document.getElementById("close-drawer-btn");
@@ -328,7 +346,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (e.ctrlKey) {
         openFolder(res.path);
       } else {
-        openFile(res.path);
+        openFile(res.path, res);
       }
     } else if (e.key === " " && activeIndex >= 0 && document.activeElement !== searchInput) {
       e.preventDefault();
@@ -344,6 +362,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!res.ok) throw new Error("Search failed");
       const data = await res.json();
       currentResults = data.results || [];
+      updateCategoryCounts(data.category_counts);
       renderResults(currentResults, query);
     } catch (err) {
       console.error("Search error:", err);
@@ -404,7 +423,33 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  
+  function updateCategoryCounts(counts) {
+    if (!counts) {
+      document.querySelectorAll(".filter-chips .chip .chip-count").forEach(el => el.textContent = "");
+      return;
+    }
+    const mapping = {
+      "all": counts.all,
+      "docs": counts.docs,
+      "sheets": counts.sheets,
+      "code": counts.code,
+      "images": counts.images,
+      "videos": counts.videos,
+      "audio": counts.audio,
+    };
+    filterChips.forEach(chip => {
+      const f = chip.dataset.filter;
+      const badge = chip.querySelector(".chip-count");
+      if (badge) {
+        const c = mapping[f] || 0;
+        badge.textContent = c > 0 ? c : "";
+      }
+    });
+  }
+
   function showEmptyState() {
+    updateCategoryCounts(null);
     emptyState.style.display = "block";
     resultsList.style.display = "none";
     noResults.style.display = "none";
@@ -503,7 +548,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       card.addEventListener("dblclick", () => {
-        openFile(r.path);
+        openFile(r.path, r);
       });
 
       resultsList.appendChild(card);
@@ -586,7 +631,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       card.querySelector(".open-file-btn").addEventListener("click", (e) => {
         e.stopPropagation();
-        openFile(r.path);
+        openFile(r.path, r);
       });
 
       card.querySelector(".open-folder-btn").addEventListener("click", (e) => {
@@ -715,7 +760,7 @@ document.addEventListener("DOMContentLoaded", () => {
   closeDrawerBtn.addEventListener("click", closeDrawer);
 
   previewOpenFileBtn.addEventListener("click", () => {
-    if (currentActiveResult) openFile(currentActiveResult.path);
+    if (currentActiveResult) openFile(currentActiveResult.path, currentActiveResult);
   });
 
   previewOpenFolderBtn.addEventListener("click", () => {
@@ -731,12 +776,22 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Windows Actions
-  async function openFile(path) {
+  async function openFile(path, result = null) {
     try {
+      const payload = { path };
+      if (result) {
+        if (result.kind === "doc" && path.toLowerCase().endsWith(".pdf")) {
+          payload.page = result.loc_start;
+        } else if (result.kind === "code") {
+          payload.line = result.loc_start;
+        } else if (result.kind === "video" || result.kind === "audio") {
+          payload.timestamp = result.loc_start;
+        }
+      }
       await fetch("/api/open-file", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ path }),
+        body: JSON.stringify(payload),
       });
     } catch (err) {
       console.error("Open file error:", err);
@@ -940,12 +995,203 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+
+  // Setup Wizard Logic
+  async function checkInitialSetup(firstRunCompleted, totalFiles) {
+    if (firstRunCompleted) return;
+    try {
+      const res = await fetch("/api/folders");
+      const data = await res.json();
+      if (!data.chosen_folders || data.chosen_folders.length === 0) {
+        openSetupWizard();
+      }
+    } catch (e) {
+      console.error("Setup check error:", e);
+    }
+  }
+
+  async function openSetupWizard() {
+    wizardStep = 1;
+    wizardSelectedPaths.clear();
+    showWizardStep(1);
+    setupWizardModal.style.display = "flex";
+
+    // Load suggested folders in background for step 2
+    try {
+      const res = await fetch("/api/setup/suggested-folders");
+      const data = await res.json();
+      wizardSuggestedData = data.suggested_folders || [];
+      wizardSuggestedData.forEach((f) => wizardSelectedPaths.add(f.path));
+      renderWizardFolders(data.is_gpu);
+      updateWizardEstimate();
+    } catch (e) {
+      console.error("Suggested folders error:", e);
+    }
+  }
+
+  function showWizardStep(step) {
+    wizardStep = step;
+    wizardStep1.style.display = step === 1 ? "flex" : "none";
+    wizardStep2.style.display = step === 2 ? "flex" : "none";
+    wizardStep3.style.display = step === 3 ? "flex" : "none";
+
+    wizardBackBtn.style.display = step > 1 ? "block" : "none";
+    wizardEstBadge.style.display = step === 2 ? "flex" : "none";
+
+    if (step === 1) {
+      wizardNextBtn.textContent = "Continue";
+    } else if (step === 2) {
+      wizardNextBtn.textContent = "Continue";
+    } else if (step === 3) {
+      wizardNextBtn.textContent = "Start FileSift";
+    }
+  }
+
+  function renderWizardFolders(isGpu) {
+    wizardSuggestedList.innerHTML = "";
+    if (wizardSuggestedData.length === 0) {
+      wizardSuggestedList.innerHTML = `<p class="step-sub">No standard folders found. Use "+ Add Other Folder..." below.</p>`;
+      return;
+    }
+
+    wizardSuggestedData.forEach((f) => {
+      const card = document.createElement("div");
+      const isChecked = wizardSelectedPaths.has(f.path);
+      card.className = `folder-check-card ${isChecked ? "checked" : ""}`;
+
+      const etaText = f.estimated_seconds > 0 
+        ? (f.estimated_seconds >= 60 ? `~${(f.estimated_seconds / 60).toFixed(1)} mins` : `~${Math.ceil(f.estimated_seconds)}s`)
+        : "instant";
+
+      card.innerHTML = `
+        <div class="folder-card-left">
+          <input type="checkbox" ${isChecked ? "checked" : ""} />
+          <div class="folder-card-info">
+            <span class="folder-card-title">${escapeHtml(f.label || f.name)}</span>
+            <span class="folder-card-meta">${f.total_files} files • ${escapeHtml(f.path)}</span>
+          </div>
+        </div>
+        <div class="folder-card-eta">${etaText}</div>
+      `;
+
+      const chk = card.querySelector("input");
+      card.addEventListener("click", (e) => {
+        if (e.target !== chk) chk.checked = !chk.checked;
+        if (chk.checked) {
+          wizardSelectedPaths.add(f.path);
+          card.classList.add("checked");
+        } else {
+          wizardSelectedPaths.delete(f.path);
+          card.classList.remove("checked");
+        }
+        updateWizardEstimate();
+      });
+
+      wizardSuggestedList.appendChild(card);
+    });
+  }
+
+  async function updateWizardEstimate() {
+    const paths = Array.from(wizardSelectedPaths);
+    if (paths.length === 0) {
+      wizardEstText.textContent = "0 folders selected";
+      return;
+    }
+    wizardEstText.textContent = "Estimating...";
+    try {
+      const res = await fetch("/api/setup/estimate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ paths }),
+      });
+      const est = await res.json();
+      const timeStr = est.estimated_minutes >= 1 ? `~${est.estimated_minutes} mins` : `~${Math.ceil(est.estimated_seconds)} secs`;
+      const devStr = est.is_gpu ? "GPU" : "CPU";
+      wizardEstText.textContent = `${timeStr} on ${devStr} (${est.total_files.toLocaleString()} files)`;
+    } catch (e) {
+      wizardEstText.textContent = `${paths.length} folders selected`;
+    }
+  }
+
+  if (wizardBackBtn) {
+    wizardBackBtn.addEventListener("click", () => {
+      if (wizardStep > 1) showWizardStep(wizardStep - 1);
+    });
+  }
+
+  if (wizardNextBtn) {
+    wizardNextBtn.addEventListener("click", async () => {
+      if (wizardStep === 1) {
+        showWizardStep(2);
+      } else if (wizardStep === 2) {
+        showWizardStep(3);
+      } else if (wizardStep === 3) {
+        const chosen_folders = Array.from(wizardSelectedPaths);
+        try {
+          await fetch("/api/setup/complete", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ chosen_folders, start_indexing: true }),
+          });
+          setupWizardModal.style.display = "none";
+          fetchFolders();
+          fetchStatus();
+        } catch (e) {
+          console.error("Complete setup error:", e);
+        }
+      }
+    });
+  }
+
+  if (wizardBrowseBtn) {
+    wizardBrowseBtn.addEventListener("click", async () => {
+      try {
+        const res = await fetch("/api/folders/browse", { method: "POST" });
+        const data = await res.json();
+        if (!data.cancelled && data.path) {
+          const norm = data.path;
+          if (!wizardSuggestedData.some((f) => f.path.toLowerCase() === norm.toLowerCase())) {
+            wizardSuggestedData.push({
+              path: norm,
+              name: norm.split(/[\\/]/).pop() || norm,
+              label: norm.split(/[\\/]/).pop() || norm,
+              total_files: 0,
+              estimated_seconds: 0,
+            });
+          }
+          wizardSelectedPaths.add(norm);
+          renderWizardFolders(true);
+          updateWizardEstimate();
+        }
+      } catch (e) {
+        console.error("Wizard browse error:", e);
+      }
+    });
+  }
+
+  // Pause / Resume indexing button
+  if (pauseIndexBtn) {
+    pauseIndexBtn.addEventListener("click", async () => {
+      const isPaused = pauseIndexBtn.textContent.trim().toLowerCase() === "resume";
+      const endpoint = isPaused ? "/api/index/resume" : "/api/index/pause";
+      try {
+        const res = await fetch(endpoint, { method: "POST" });
+        if (res.ok) {
+          pauseIndexBtn.textContent = isPaused ? "Pause" : "Resume";
+        }
+      } catch (err) {
+        console.error("Pause/resume error:", err);
+      }
+    });
+  }
+
   // Fetch Status
   async function fetchStatus() {
     try {
       const res = await fetch("/api/status");
       const data = await res.json();
       statsPill.textContent = `${data.total_files} files • ${data.total_chunks} chunks`;
+      checkInitialSetup(data.first_run_completed, data.total_files);
       modalDbStats.textContent = `${data.total_files} files indexed (${data.db_size_mb} MB)`;
 
       const devName = data.device === "cuda" ? (data.gpu_name ? `GPU: ${data.gpu_name.replace("NVIDIA GeForce ", "")}` : "GPU") : "CPU";
@@ -980,12 +1226,19 @@ document.addEventListener("DOMContentLoaded", () => {
         const res = await fetch("/api/index/progress");
         const p = await res.json();
 
-        if (p.status === "indexing" || p.status === "scanning" || p.status === "loading_model") {
+        if (p.status === "indexing" || p.status === "scanning" || p.status === "loading_model" || p.status === "paused") {
           indexingBanner.style.display = "block";
           indexProgressBar.style.width = `${p.progress_pct}%`;
           indexPctLabel.textContent = `${p.progress_pct}%`;
 
-          if (p.status === "loading_model") {
+          if (pauseIndexBtn) {
+            pauseIndexBtn.textContent = p.is_paused ? "Resume" : "Pause";
+          }
+
+          if (p.is_paused || p.status === "paused") {
+            indexStatusLabel.textContent = `Indexing Paused (${p.files_indexed} / ${p.total_files} files)`;
+            indexCurrentFile.textContent = "Paused by user (click Resume to continue)";
+          } else if (p.status === "loading_model") {
             indexStatusLabel.textContent = "Loading EmbeddingGemma 2...";
             indexCurrentFile.textContent = "Initializing model weights on device...";
           } else if (p.status === "scanning") {

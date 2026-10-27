@@ -21,13 +21,14 @@ from core.index_store import IndexStore
 
 class IndexingProgress:
     def __init__(self):
-        self.status = "idle"  # idle, scanning, indexing, done, error, cancelled
+        self.status = "idle"  # idle, scanning, indexing, paused, done, error, cancelled
         self.current_file = ""
         self.files_indexed = 0
         self.total_files = 0
         self.chunks_created = 0
         self.start_time = 0.0
         self.error_message = ""
+        self.is_paused = False
 
     def to_dict(self) -> Dict[str, Any]:
         elapsed = round(time.time() - self.start_time, 1) if self.start_time > 0 else 0
@@ -41,6 +42,7 @@ class IndexingProgress:
             "chunks_created": self.chunks_created,
             "elapsed_seconds": elapsed,
             "error_message": self.error_message,
+            "is_paused": self.is_paused,
         }
 
 
@@ -53,6 +55,8 @@ class IndexManager:
         self.embedder = EmbeddingGemmaEngine.get_instance()
         self.progress = IndexingProgress()
         self._cancel_flag = threading.Event()
+        self._pause_event = threading.Event()
+        self._pause_event.set()  # Set means running (not paused)
         self._thread: Optional[threading.Thread] = None
         self._lock = threading.Lock()
         self.on_index_complete: Optional[Callable[[], None]] = None
@@ -66,12 +70,29 @@ class IndexManager:
     def is_running(self) -> bool:
         return self._thread is not None and self._thread.is_alive()
 
+    def is_paused(self) -> bool:
+        return not self._pause_event.is_set()
+
+    def pause_indexing(self) -> None:
+        self._pause_event.clear()
+        self.progress.is_paused = True
+        if self.progress.status == "indexing":
+            self.progress.status = "paused"
+
+    def resume_indexing(self) -> None:
+        self._pause_event.set()
+        self.progress.is_paused = False
+        if self.progress.status == "paused":
+            self.progress.status = "indexing"
+
     def start_indexing(self, full_reindex: bool = False) -> bool:
         with self._lock:
             if self.is_running():
                 return False
 
             self._cancel_flag.clear()
+            self._pause_event.set()
+            self.progress.is_paused = False
             self._thread = threading.Thread(
                 target=self._run_indexing,
                 args=(full_reindex,),
@@ -82,6 +103,15 @@ class IndexManager:
 
     def cancel_indexing(self) -> None:
         self._cancel_flag.set()
+        self._pause_event.set()  # Unblock thread if paused so it exits cleanly
+
+    def _wait_if_paused(self) -> bool:
+        """Waits while paused. Returns True if cancelled during pause, False otherwise."""
+        while not self._pause_event.is_set():
+            if self._cancel_flag.is_set():
+                return True
+            time.sleep(0.2)
+        return self._cancel_flag.is_set()
 
     def _run_indexing(self, full_reindex: bool) -> None:
         self.progress.status = "scanning"
@@ -89,6 +119,7 @@ class IndexManager:
         self.progress.files_indexed = 0
         self.progress.chunks_created = 0
         self.progress.error_message = ""
+        self.progress.is_paused = False
 
         try:
             # 1. Clean up or prepare
@@ -118,7 +149,7 @@ class IndexManager:
             deferred_long_pdfs: List[Any] = []
 
             for idx, file_meta in enumerate(to_index):
-                if self._cancel_flag.is_set():
+                if self._cancel_flag.is_set() or self._wait_if_paused():
                     self.progress.status = "cancelled"
                     return
 
@@ -200,6 +231,7 @@ class IndexManager:
                                     loc_end=int(end_sec),
                                     label=f"▶ {time_str}",
                                     doc_prompt=f"title: {file_meta.filename} | text: Audio recording at {time_str}",
+                                    metadata={"seconds": float(start_sec)},
                                 )
                                 all_chunks.append(aud_chunk)
                                 all_vectors.append(aud_vec)
@@ -221,6 +253,7 @@ class IndexManager:
                                     loc_end=int(pts_sec + 3),
                                     label=f"🎬 {time_str}",
                                     doc_prompt=f"title: {file_meta.filename} | text: Video scene at {time_str}",
+                                    metadata={"seconds": float(pts_sec)},
                                 )
                                 all_chunks.append(vid_chunk)
                                 all_vectors.append(f_vec)
@@ -238,6 +271,7 @@ class IndexManager:
                                     loc_end=int(end_sec),
                                     label=f"🎵 {time_str}",
                                     doc_prompt=f"title: {file_meta.filename} | text: Video soundtrack at {time_str}",
+                                    metadata={"seconds": float(start_sec)},
                                 )
                                 all_chunks.append(trk_chunk)
                                 all_vectors.append(aud_vec)
@@ -268,7 +302,7 @@ class IndexManager:
             if deferred_long_pdfs and not self._cancel_flag.is_set():
                 print(f"[IndexManager] Processing deferred pages for {len(deferred_long_pdfs)} long PDFs...")
                 for file_meta, total_pg in deferred_long_pdfs:
-                    if self._cancel_flag.is_set():
+                    if self._cancel_flag.is_set() or self._wait_if_paused():
                         break
                     try:
                         self.progress.current_file = f"{file_meta.filename} (pages 31-{min(5000, total_pg)})"
@@ -292,7 +326,6 @@ class IndexManager:
                                 # Append to existing file record
                                 existing = self.store.get_file(file_meta.path)
                                 if existing:
-                                    # Fetch existing chunks to update file record with combined set
                                     with self.store.get_connection() as conn:
                                         rows = conn.execute("SELECT * FROM chunks WHERE file_id = ? ORDER BY chunk_index", (existing["id"],)).fetchall()
                                         combined_chunks = []

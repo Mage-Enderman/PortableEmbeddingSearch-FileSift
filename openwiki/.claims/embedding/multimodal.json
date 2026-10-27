@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:b2cc694aa85da0be47e9fe93708ac81f226caba750e2072b82b9cc3199c5a75a",
+  "claims": [
+    {
+      "id": "claim_fee6ef6d66874a37b9ce06df2e054412",
+      "statement": "EmbeddingGemmaEngine manages model loading into a portable local cache directory using bfloat16 precision on supported CUDA hardware and float32 on CPU.",
+      "evidence": [
+        {
+          "resource": "repo://core/embedder.py#L79-L89",
+          "version": "repo-lines-v1:sha256:7e097137f520f9504db9b63684462e3f7c955b8522ca017ca9dfa8a172203faf:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIxNmM3NjM0MjcwZjI2NTIxOWZiZjc2MTdkMzc5YWI2YjM1NjczMjFjNWVhZmE3NTA2YTBhNTY5Nzc4MWM0Y2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYyZDBkNTczN2ViNjIyMDljYjVhNzgxMTJhNDc1ZTkzYzE3NTE3MGEzMDZiMmRjZmM4OTE3YzVmYmQ2OTkzNzYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjUzNmFkYjM1NDY1ODUzMWNjMzFkNWU5M2NjZGYyNjNiYmI5NmM4MjgzMjVjM2NiNWYwNGQ0OTUxNTQxZjk0YWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk4OTgwY2RiYjQzYTNhYmM3NDNlN2RhNmM5MzM1ZmE2ZDVlYmQxMzgzNWEwNTQ1MGY4Yzk4MDg0ZWU2MGNlZWQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_32b9f6d0e4c74dc09afc4688e602f625",
+      "statement": "Query embedding prefixes instructions with official task prompts ('task: search result | query:' or 'task: code retrieval | query:') and applies Matryoshka truncation to 512 dimensions with L2 normalization.",
+      "evidence": [
+        {
+          "resource": "repo://core/embedder.py#L96-L115",
+          "version": "repo-lines-v1:sha256:f8cf5e8e14ed29f8c923ffe6a3bdb2a6759ebbc1c33e8cf73940cf4aeed1412c:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIwM2QxYmU0MjdlNjM0NzdmZDY2M2E2ZGUxZTQ1NmRiOTI2N2NkNTk1N2JlZmRkYTY5Mjc3NDg3MjY2NGI0ZDEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImIwYzQ3MTMzN2NhMWMzYmY4ODFhYjA5MDZlNGUxNzUzOTNmYTM0YjQwMjg3YmI0MmQ5NjdhMTA3ZGJjZDFmM2YiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM2OGZmNWQzNWZjY2YxOGMxNTFiNWNkZDFiOWUyYWYxOGE3MzMyOGUzMmZjY2UyYTg3ZTJjYjMwODhlOWVmM2IifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e64b3559482f4478b3630e7d0e1bd1f0",
+      "statement": "Audio files are resampled to 16kHz mono and segmented into overlapping 30-second windows with 15-second hops using PyAV before embedding.",
+      "evidence": [
+        {
+          "resource": "repo://core/embedder.py#L167-L214",
+          "version": "repo-lines-v1:sha256:11b947e8b99e0134707ed4891862ad7ef16eba92d5119aaaa97f3e8d14808347:eyJzZWxlY3RlZExpbmVDb3VudCI6NDgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZjZmM4MGY1MzAzMzI0MWViN2Y3MDAyZWNmYzc2MGVmZGQxNzAwYWQ4NWJiYjFhYjA5YmM3MGY5NzI0Y2U3ZjgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEyODY5MzYxZDQxMzQ0NjkxYmQ1ODE1NTE5OTZkNDhhOTk1NmVmNTU0ZjYyMTFhMWYyODg5M2M5Zjc3ZTc4NjgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNmNzEzZWZjMWY2YjZmZDgwNDJjYmMzMjFiNDliNzY0ZjcyMjRkNTdjMzAzMmZiMTRiODU5ZjE0ZjY2YmFhMWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFhNzkyN2M5MDk0NDgwYjYxZTU0ZGM3MjUyNTFmN2RkMTRjODIyZTU1NmNjZWU4ZmZkYzE2MWJjOWE5YWQ2YTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_387abf28e0b448bfae2db3e49723c949",
+      "statement": "Video files are embedded through a combination of periodic keyframe visual encodings and 30-second soundtrack audio window embeddings using PyAV.",
+      "evidence": [
+        {
+          "resource": "repo://core/embedder.py#L220-L270",
+          "version": "repo-lines-v1:sha256:d132a375d95ec75f82a489c3b175fc6f0623c961ea3a10307465081bff573cbe:eyJzZWxlY3RlZExpbmVDb3VudCI6NTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE5OWY2MGE5NmJmMWI4YjhhNDdmZjI5NzA4YzE1MWE3NTU5OGE3YzJlMTA1YTA3N2I0YTlmNmRjNWUxZDk0N2YiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJhMzEyZjIyOTBmNDk1NWU3MmM2Yzc2OTU1MThhOTFkMjA4MDVkYTdiZDQ1YjYxNjMyOWQ1MmRhZmUzNmM2NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImIwYmExMTkxZWI1NDVlNDdmZTRmYmQ4YTA4ODRjM2Q1YjhiNWE3ZDI1NDlmMjlhMjliMTRmOTViNjkyZDA5NjEifQ"
+        },
+        {
+          "resource": "repo://core/indexer.py#L210-L245",
+          "version": "repo-lines-v1:sha256:4f0682236f5f52270c386f3571efffaae269e0080257c064da9596f368aa2aec:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU2MWUzMzQ2MjkyNGFkMjMwM2QzN2MzNGI1NmY5ZGFhMDk3MjBkNjM0ZTVmNTlkY2UwOWM5MjljODMyNjc1ZWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc3N2Y5NjViYTM1OTIyMjBiNzMyMGM1N2Q0MWFlY2Y2MmE2NjViYWJmYWU3ZjZhMjNiYzQxZjExZGJjZTg4Y2YiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg1NzU5MDQ1MTZiZjYwYzAzNzJlYjJjMjdhZjZjOTI5YzdiY2Q4OWVmNjQzODRkOWQyZGVhNmI0Yjc5ODI3MmQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZkY2I3YjA2ZjEzMWM1YzA4NjhlNzU4YWFmZWY1YjE4OGM2Yzg0NDY3MDEzZjgzYjAxZTE4YzAxN2VmY2Y2ODkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d1cbed2c029642c2849167c1aaa1def2",
+      "statement": "Device selection dynamically switches between CUDA and CPU with VRAM inspection and runtime model migration.",
+      "evidence": [
+        {
+          "resource": "repo://core/embedder.py#L34-L65",
+          "version": "repo-lines-v1:sha256:c8ef2eb5faec71c440dc23db29ecb7b7fca72baf4297ebc8843279c8f360ba8e:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4N2Y4MjUyN2E3NjA1ZTBmZWFlNWExYmE3ODBjNDY0ZjEyYjhkZDA3YTY0NjE5OGE4NGFiMjY0NzY5ZGY1ZDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc0YWZmOTZkZTlkYzIzY2U5MTEyZWU3ZGU5OTI3MzRkNWEwNjlhZmE3M2E1ZmM0NWM0YmIxNWM4YmIwYTM3ZTQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJmZTkyMzdiMTZkMmQ1NWZlYTRlZWI3MTA2NmE3MmI5ZDY4MGVkNmU3MDY1YjY2YzVhZDcxZTNjMmNlNmEwM2QifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-10-27T03:41:19.738Z"
+  }
+}

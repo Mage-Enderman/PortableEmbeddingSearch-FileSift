@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:7b1843211a250504642d58f59469892b532d2bcd8b7f43f51e6b5da495095ca2",
+  "claims": [
+    {
+      "id": "claim_00cade8adc6a43fe8496d887df860a72",
+      "statement": "Crawler detects file additions, modifications, and deletions by comparing scanned filesystem paths, modified times, and sizes against stored database metadata.",
+      "evidence": [
+        {
+          "resource": "repo://core/crawler.py#L129-L157",
+          "version": "repo-lines-v1:sha256:1ad7e28aff2cae5a174762b1e448bb712b1a4f0ac37a91a6e6ab801d618b3b3e:eyJzZWxlY3RlZExpbmVDb3VudCI6MjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZlZjQ0M2Q1MGY2NzQ3ZjYxMTQ0YWE4ZDEzNWMwNjVjZWU4ODhlMzZkOTYyMzJlMDhkNzE3ZjZhNmNjYjQ1YWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc4MTQ1MDNmZTQzZTdmYzEyODU2NjI4NDI0NTViOWNiM2EyYzhiMjRmN2QzMGFmOTdlYTFmZmZlZWRkODMwY2YiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBiOGY1ZTA5ODM4Y2M2NjgzNTliNWU4NTM3MzE4YTIxZjM1MWU2MmUwOGUzYWIwMzg5MWRmMDc3MGE3ZDI3Y2YiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_834b9d17b498488bbf3fc09343ebfaee",
+      "statement": "The schedule_staggered scheduler prioritizes smaller folders and sorts files by size within each folder, interleaving round-robin batches across all configured folders to avoid starvation.",
+      "evidence": [
+        {
+          "resource": "repo://core/crawler.py#L92-L127",
+          "version": "repo-lines-v1:sha256:8c56634e5ce5731dcb4a257b9a4037a250cafba99120c1246fdbfc76a00e5dd7:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA3NGQxNGE5YmQwMTA0NGM3YWE1NTYzZTk1ZTg1MDBlMDI2ZmE3MWJmMDhmNzhkNmZkMTc1ZDQ3YjdlNDljZTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU3NzZhYWRmNzYwYzk5N2Y2OWEwYWY0MjQ3Y2UzMTgxYTEzNWQ4N2MzMzIwOWY0NGFjMDZlOWRiOTdiZGQ2MWMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVhYmUwMDc5MWNkMGZlNjc0Yjc1MGUyNmJmMzQzYThmMzUxNTBmZjVkZDQ3ZDRlYjU3MzU2M2YyMjBlNGQ2MjEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg4NzNkNWMyZjM4NmI0YzMwMzFkZGUwMDEyNmU5ZGYwZmU4ZGVhYTQ0Yjk3MDU5YTJhMmM4MmY0YjA2YzQxYWUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8e5fb74a26ee4e42a1f865436cca13b7",
+      "statement": "Content extractors support text, code, RTF, ODT, HTML, DOCX, and PDF formats, tagging segments with line numbers or page numbers and identifying high-density numeric data.",
+      "evidence": [
+        {
+          "resource": "repo://core/extractors.py#L218-L244",
+          "version": "repo-lines-v1:sha256:75ff94fcb6fb056de41fa402efe562f01ebca5c31a7d42c06afac2649b19ab29:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYxYzkxODMwZDlmYmNjNzZkZjhkZTViZThmYmRhZTlmODY0YWRjYTVlOWMxYTIzNzAwYjM3YzlhOTE0NmFhN2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNhYTJkMzgxMDYxYmI1M2QwOWZhM2FlNTI5N2ZmODE1OTlmN2JiOGU3MzRjZTc2ZTQ3ZDZmOTI1NDhkYzViZDkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZmYmNiNzZiZmY2YzQ1ZDM0M2FlNWMyYWQ2MjZlMWZiNGFmNTJjN2Y5MDA4NTMzN2RjZTU1OTEzODc1ZjljYjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3MzkxZWM4NzVmZjAzMjI5MzUxMzAzYTgwYzQyY2FkZTRlNDQ4MzU5MDJhZmI0MjY5ZDMxMWJjMmFjMWFkMGEifQ"
+        },
+        {
+          "resource": "repo://core/extractors.py#L68-L96",
+          "version": "repo-lines-v1:sha256:5663d8deef53c37b5b578a8f3f7c551f70eb1965b26e9b79d298d0ddeec9a764:eyJzZWxlY3RlZExpbmVDb3VudCI6MjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA0ZGE5YTJlODUxZDZkNjI1Y2Q2ODQ0MDZlYjU2YWNkNGM3NGIzYTYwNmRhMzc3MzI5MzgxZWZhMjUyNDNhMTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg2N2Q4M2Q3YTBiYTZkZTA1NTdhMzJiNTUxMWFjMmZhMjhhZDkzNDAzOTBmNzRkNGJkOGM1YTcyNGQ4MTRmNjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk5ZDMwNTQwYzI4MjYyZTczMjllMjg3ZjcwOTgxZGUzOWY0Yjk3OTg4NjlkNThkZWVhMWZjZjVjMmUxYjdlNTgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_78b56b897a364ec1974bc5fa74c00af1",
+      "statement": "Adaptive chunking segments text up to 1500 characters while reserving numeric-heavy chunks for SQLite FTS5 lexical matching to avoid polluting the vector space.",
+      "evidence": [
+        {
+          "resource": "repo://core/chunker.py#L33-L99",
+          "version": "repo-lines-v1:sha256:bdd886de152c9e5d3f97a10b8423fb078ca0820af24c8cc173632c29c59eee5e:eyJzZWxlY3RlZExpbmVDb3VudCI6NjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI5YjJjNTMzMTkyOWM4NmQxMDkzNGFhODJiNGE3ZWU3YjgyNmIxMTU5MGVkNjZlNDc3OGY0NjIxZTBlYjQ0NjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE4YzNmMjllMTllMWVmNTliMmI0MDVmYjEyNDk1MDE4ZGI0M2MzNTdmODM4NmI2OTk4NDFiOTk2YmI0ZmFmZDQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjgyZWM0ZTRjMDA2Y2FjZmVkOTExYThjMjAwMWQ3MWZlZWI1M2EyZGYyMDRiMmU1YTgzYTU1ODdhM2VkZmNkYjMifQ"
+        },
+        {
+          "resource": "repo://core/indexer.py#L151-L168",
+          "version": "repo-lines-v1:sha256:95f27ead781f207956b066266acf67a831294912a0c0da72d849026b53c4a2d1:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU1Mjc2MmQyNzIyMzk5MmEzZWU5OThjYWVmMzEzYTAzNmYyNmQ2NWFjNDc4ZDE4Y2Y1OTlmYzNhN2FhMmI1YWIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhjYTdhZTRkNWRmYWFlZWRlMmI2ZDhiYzE1NzQyYmVhNGJmM2NjMGU1NDNkNmQwMGE1Zjg2ZTI4NzliMmYyMmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZiMTUyNGE0ZDkxODA3ZGIwZmZjYzZhMDU1NTA1Y2YyNzU5ODdhOTg2ODM5MzM3NDQ0YTA3NTU4NjU0ZTk2MWYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_eef6cdaece3d49d48d3adfc014542abc",
+      "statement": "IndexManager executes indexing on a background daemon thread with cooperative cancellation checks and progress reporting.",
+      "evidence": [
+        {
+          "resource": "repo://core/indexer.py#L120-L124",
+          "version": "repo-lines-v1:sha256:24697578ca594348c0d2dcead7d38a545b8f7aafe125cfa6d9958f5af0853eef:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiM2QyMzM5NTI4YmMwMjc2MGMwYTUyYzU0NzU3ZGYzZWE0MTY0MWRjMTkyMzM1ZDczOTI3MTliMGZiMWFhMmRiMSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2ViNzAyNTc1OTNkYTA2ZjY4MmEzZGRkYTU0YTlkMjYwZDRmYzUxNGY2NDUyMzdmNWNhNzRiMDhmOGRhNjFhNiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTJhZjc1ZGM4NThiOWIyYWY4MmU0ZjU4N2Y0M2VjMDNkMGU4ODAzMjQ5MWM2ZDM0Y2ZiMDQzYTFlNzRjYzg2YiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMmJiZjEwMmQ3NzdkNTQ0ODIyMzBhMzg3Y2RiNmUyZDQ5YTg1M2IzODhlYjE1MDEzMmUxMjFjZDRlZDA1M2ZkMyJ9"
+        },
+        {
+          "resource": "repo://core/indexer.py#L69-L85",
+          "version": "repo-lines-v1:sha256:b0f61d6266cdee890e113cb501b047ccf95b1941319e815a584a364820a0faab:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZkMmZkODRiZDcyZjM1YTVkYTk4OTgyMTY2OTY3ZTdlNjMyY2M4OWYxYzc0YzllZGUyMzRhNDJkN2I2NWI2MjkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdjZmM2MjE1Y2Q4N2MxZWMyNDRjYTliY2NiYjMyZDkyZDZhYWEzZGZkYjY4NDdkYTNjZGExNmRiNWU1ZTIyMDMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRhMmUxZjlhZDQxNTI3Y2VlZmY5ODU3YjIzNzFhYmI0YzM1YWQzOWJjM2E2MjE1MzBkZGZkOWQxYzZkMWJlOGUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-10-27T03:41:19.738Z"
+  }
+}

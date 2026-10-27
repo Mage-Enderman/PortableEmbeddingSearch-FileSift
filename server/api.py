@@ -19,6 +19,8 @@ from core.embedder import EmbeddingGemmaEngine
 from core.indexer import IndexManager
 from core.searcher import HybridSearcher
 from core.extractors import IMAGE_EXTS, AUDIO_EXTS, VIDEO_EXTS
+from core.opener import open_result_at
+from core.estimator import get_standard_user_folders, estimate_folder_workload
 
 # Thumbnail cache directory
 THUMBNAILS_DIR = DATA_DIR / "thumbnails"
@@ -53,6 +55,22 @@ class FolderRequest(BaseModel):
     path: str
 
 
+class OpenFileRequest(BaseModel):
+    path: str
+    page: Optional[int] = None
+    timestamp: Optional[float] = None
+    line: Optional[int] = None
+
+
+class EstimateRequest(BaseModel):
+    paths: List[str]
+
+
+class SetupCompleteRequest(BaseModel):
+    chosen_folders: List[str]
+    start_indexing: bool = True
+
+
 class DeviceRequest(BaseModel):
     device: str  # "cuda", "cpu", or "auto"
 
@@ -81,6 +99,8 @@ def get_status():
         "total_chunks": db_stats["total_chunks"],
         "db_size_mb": db_stats["db_size_mb"],
         "indexing_running": indexer.is_running(),
+        "is_paused": indexer.is_paused(),
+        "first_run_completed": getattr(config, "first_run_completed", False),
     }
 
 
@@ -177,6 +197,76 @@ def browse_folder():
     return {"path": "", "cancelled": True}
 
 
+@app.get("/api/setup/suggested-folders")
+def get_suggested_folders():
+    folders = get_standard_user_folders()
+    is_gpu = embedder.device.startswith("cuda")
+    enhanced = []
+    for f in folders:
+        # Quick workload check for each suggested folder
+        workload = estimate_folder_workload(f["path"], is_gpu=is_gpu, max_files_scan=2000)
+        enhanced.append({
+            **f,
+            "total_files": workload["total_files"],
+            "counts": workload["counts"],
+            "estimated_seconds": workload["estimated_seconds"],
+            "estimated_size_mb": workload["estimated_size_mb"],
+        })
+    return {"suggested_folders": enhanced, "is_gpu": is_gpu}
+
+
+@app.post("/api/setup/estimate")
+def estimate_setup_workload(req: EstimateRequest):
+    is_gpu = embedder.device.startswith("cuda")
+    folder_estimates = []
+    total_files = 0
+    total_seconds = 0.0
+    total_size_mb = 0.0
+    aggregate_counts = {"image": 0, "pdf": 0, "doc": 0, "code": 0, "video": 0, "audio": 0, "other": 0}
+
+    for p in req.paths:
+        est = estimate_folder_workload(p, is_gpu=is_gpu)
+        folder_estimates.append(est)
+        total_files += est["total_files"]
+        total_seconds += est["estimated_seconds"]
+        total_size_mb += est["estimated_size_mb"]
+        for k, v in est["counts"].items():
+            aggregate_counts[k] = aggregate_counts.get(k, 0) + v
+
+    return {
+        "folder_estimates": folder_estimates,
+        "total_files": total_files,
+        "estimated_seconds": round(total_seconds, 1),
+        "estimated_minutes": round(total_seconds / 60.0, 1),
+        "estimated_size_mb": round(total_size_mb, 1),
+        "aggregate_counts": aggregate_counts,
+        "is_gpu": is_gpu,
+    }
+
+
+@app.post("/api/setup/complete")
+def complete_setup(req: SetupCompleteRequest):
+    added_paths = []
+    for p in req.chosen_folders:
+        norm = os.path.normpath(p.strip())
+        if os.path.exists(norm) and os.path.isdir(norm):
+            config.add_folder(norm)
+            added_paths.append(norm)
+
+    config.first_run_completed = True
+    config.save()
+
+    if req.start_indexing and added_paths:
+        if not indexer.is_running():
+            indexer.start_indexing(full_reindex=False)
+
+    return {
+        "status": "completed",
+        "chosen_folders": config.chosen_folders,
+        "indexing_started": indexer.is_running(),
+    }
+
+
 @app.post("/api/index/start")
 def start_indexing(full_reindex: bool = False):
     if indexer.is_running():
@@ -184,6 +274,22 @@ def start_indexing(full_reindex: bool = False):
 
     started = indexer.start_indexing(full_reindex=full_reindex)
     return {"status": "started" if started else "failed"}
+
+
+@app.post("/api/index/pause")
+def pause_indexing():
+    if not indexer.is_running():
+        return {"status": "not_running"}
+    indexer.pause_indexing()
+    return {"status": "paused"}
+
+
+@app.post("/api/index/resume")
+def resume_indexing():
+    if not indexer.is_running():
+        return {"status": "not_running"}
+    indexer.resume_indexing()
+    return {"status": "resumed"}
 
 
 @app.post("/api/index/cancel")
@@ -205,10 +311,37 @@ def search(
 ):
     try:
         results = searcher.search(query=q, kind_filter=kind, limit=limit)
+        category_counts = {
+            "all": len(results),
+            "docs": 0,
+            "sheets": 0,
+            "code": 0,
+            "images": 0,
+            "videos": 0,
+            "audio": 0,
+        }
+        sheet_exts = {".xlsx", ".ods", ".pptx", ".odp", ".csv", ".tsv"}
+        for r in results:
+            ext = Path(r.path).suffix.lower()
+            if r.kind == "doc":
+                if ext in sheet_exts:
+                    category_counts["sheets"] += 1
+                else:
+                    category_counts["docs"] += 1
+            elif r.kind == "code":
+                category_counts["code"] += 1
+            elif r.kind == "image":
+                category_counts["images"] += 1
+            elif r.kind == "video":
+                category_counts["videos"] += 1
+            elif r.kind == "audio":
+                category_counts["audio"] += 1
+
         return {
             "query": q,
             "kind": kind,
             "count": len(results),
+            "category_counts": category_counts,
             "results": [r.to_dict() for r in results],
         }
     except Exception as e:
@@ -416,15 +549,20 @@ def search_media_path(req: FolderRequest, kind: str = Query("all"), limit: int =
 
 
 @app.post("/api/open-file")
-def open_file(req: FolderRequest):
-    """Opens file in default Windows application."""
+def open_file(req: OpenFileRequest):
+    """Opens file in default Windows application, or deep-launches to specific page/second/line."""
     path = os.path.normpath(req.path)
     if not os.path.exists(path):
         raise HTTPException(status_code=404, detail="File not found.")
 
     try:
-        os.startfile(path)
-        return {"status": "opened", "path": path}
+        opened = open_result_at(
+            path=path,
+            page=req.page,
+            seconds=req.timestamp,
+            line=req.line,
+        )
+        return {"status": "opened" if opened else "fallback_opened", "path": path}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to open file: {e}")
 

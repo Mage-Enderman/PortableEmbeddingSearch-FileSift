@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:a91afcde3ddd589f5f10156c019e842e40b92c96f3c33535a8466ce94635f81e",
+  "claims": [
+    {
+      "id": "claim_98e272e2935e47e39b5f1882cfc022e4",
+      "statement": "SQLite operates in WAL mode with PRAGMA synchronous NORMAL, maintaining files and chunks tables with cascading foreign key deletion and binary float32 vector blobs.",
+      "evidence": [
+        {
+          "resource": "repo://core/index_store.py#L105-L113",
+          "version": "repo-lines-v1:sha256:b586b0c30cacfc5672743403ef5ec8cc30aa1a46b24f7d49e1f898c1fbb08a5f:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZTUzYWYyNjc2ZGY1ZDJjNDZhODcwZDU2ODc5ZjczMzRmNzE0OGY4NTcxZTRkYTc0NjY4NTg1YmIzYjEwMzcyNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzMwMTZhZjNmMWM3ZWY5YzUwNGFlOGZkOTcxMDk2MGQwYzY0NGNhNGE4Mzk4OTVlYTVjMmE1M2YyOWJlNTM0NiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDBhYWM1Njg2ZTQxYzc1ZDY3ZTJhMTA0MmMxNTUyZmE0YzZiYjQ5OTljMmJlMTEwZjQ1MDI0MDAwYzQyYzEyZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjM2MWRmYWVkN2NhNGMxOGQ3YmI4ZTU1ZGM3YmZmZjA2YmY3MmVhNWI5NjgyMmE5NGRiYjFkODhmN2I4MDEzZSJ9"
+        },
+        {
+          "resource": "repo://core/index_store.py#L15-L65",
+          "version": "repo-lines-v1:sha256:24b8494187c3d51dc8716ded18d2ad7800698a09fe9bba38f7d4fb4cbe93ba42:eyJzZWxlY3RlZExpbmVDb3VudCI6NTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ5ZjI4ODk3MmI1ZGVlNjczMGViYmMxNGY5YmEyNWJmZDhjZDUyOWJiNDNiYWI5MzAyZDhhYmJlOWJkZDY1MDQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZhZWU4NTY2ZTY1ZmI4Y2UwYWI0NzZiZjBhNzUxMzg2N2VhMWU3ZGUxMmE2MTdjY2Y2ZTY3ZDMyZTkxYmRiNmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNjYjE1YzdiYjUzYTgyMjJiN2RkYTBhODJiYjJkMzIzYWMwNWY5YmM5NDUzMTFkOGU2OGI1OGUyZmY1ZDVkYjUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_90d40ebe8c8b4ca5ba48971d2decbefc",
+      "statement": "FTS5 full-text indexing uses the porter tokenizer and unicode61 diacritic stripping, automatically maintained by SQLite after-insert, after-delete, and after-update triggers on chunks.",
+      "evidence": [
+        {
+          "resource": "repo://core/index_store.py#L67-L103",
+          "version": "repo-lines-v1:sha256:a018aa9702d94bf2fe4d01bc6907c0479fba97b1e5572263ce20e49e771c9791:eyJzZWxlY3RlZExpbmVDb3VudCI6MzcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFmZTJmNTgzYmJlODA0NjQ4MTcxMjgwN2YzNGQxNmRlMWVkYjEyMWNlNjNiMmExMWM2MDk1MjUxYzM2ZTcwZGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI2NWZlMDE1MWQ2OTU5Yjg1ZjM4N2FkZmY2NTg1MmMzMDZjMzQ0ZDZlYjllNmE2ZDljNjkxODkxZGViMjE4MzMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhiMTcxNTA0NDU1MGYzOWM5YTg2ZmQ1ZTIzMTg2NmViMTMzYWYwNjU3MTEwZDY3MGEzOWFjODM2MGY1ZGE4YTgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2c3c5bbd47de4dc8b4b0d43fde61628b",
+      "statement": "parse_query_modifiers extracts negative concepts ('not:', '!') and file extension exclusions ('!json', '-pdf') from search queries without polluting semantic embedding prompts.",
+      "evidence": [
+        {
+          "resource": "repo://core/searcher.py#L77-L114",
+          "version": "repo-lines-v1:sha256:d6d5dd52c45aa3e1f8d6a14c0b0a9682ba513da26f26f21000151050a13eb284:eyJzZWxlY3RlZExpbmVDb3VudCI6MzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIwZWFjOGJjOGY2NDNhNDNhMzVmYWQ2NDNjMzdkOGM1MmQ3N2FjMjNkMWNhNDMyMzJmOGIxZTg3Yzk3YmE3ZDkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM5MjIwNGM2NWY1MDJkYzE2NDU0YjYyNDA4NTZhOWFiN2FkZTAwM2E4ZTlmODYzMzNlYzBiN2M5ZTQwOTQ5MWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE3Njg2Y2FhZjQ2OTc3MTRiOTZjM2E3NjE2NzgxM2JhOWQ5OTI1N2I1ZjdmNGVhYWZmOGExZDRmNmU0YjcwNzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjgxMzFiZjU4YTM2YzljMTRkYzI2YzBhODdlZGZkNTdiN2M5M2FiM2VjYmZjNzhmZWMzZWZkODY1MDk4MWNkZDAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_df08328684674aca99936c3879445f7e",
+      "statement": "Hybrid search combines dense vector cosine similarity and FTS5 BM25 keyword rankings using Reciprocal Rank Fusion with a smoothing constant of k=60.",
+      "evidence": [
+        {
+          "resource": "repo://core/searcher.py#L230-L245",
+          "version": "repo-lines-v1:sha256:e3f42cfba40ea6da02d9a525758567960616ab101bcf7c44f314a9aed570bf58:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQzOWUzOTE5ODM5YjU4Mzg0ZmQ4MzJkMmJkZTVhNmYwNGJmYzY5ODRlMDBiY2FkOTU1Njg5MWJjYmQ3ZGE5ODAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkwMjliN2JlZGYzZjAwNzg5ZWIzYTI3NDdkYzc4MWM4Nzg4YzFiN2IxOWE1ZDgzMjlkMTgxMWY4ZDlhZWQ5MTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE4NTE2YWQwYWExMjcwNjJiZmJjZTY1OTFiNzA4NmExMWQ5ZmI0MTI4NjUzMzExZmYxYTk0NWZhZDIwMWUxZjgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d62fd92b76254345a292113e92def07e",
+      "statement": "Vector search supports inverse concept steering by subtracting weighted negative prompt vectors from positive query vectors prior to cosine dot product.",
+      "evidence": [
+        {
+          "resource": "repo://core/searcher.py#L210-L222",
+          "version": "repo-lines-v1:sha256:80c53de6dbc5c88aa70c30a1c061c4e2b013e52ac9c980d84a01f706cb91b65f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEzODIxZTQ5YzA0YTRhYzJkZGM5Njc2MTNkOGZjZDIzYWVmNTUzNDlkYTNkMjQxYzkyNmMxMzUyNWJlNTY1ZjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhjNjI3YTc0MWFkNzQzZWUyMjhiYzU2YWU3NTRmYzc0MTdkODEwNWNkZjA5N2ZiMGZjYWU0NGMxYTYxNmY1ZjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNlNzc0NjhkZDFiYWM4YmNlM2I5YTdiMTY5MjQ1M2QxNzE1ZDRiMDc4N2ViMWMxZTdjYWNlYTAwZDNkODMwYmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImMxNWEyZjZlM2JlMjI3ODhhODk0NGM2NzE5MGVlNmM2Zjk5MDU2ZmZhMTFkMjhlZGI3MmMyMjhmMmQ2YWMxNzIifQ"
+        },
+        {
+          "resource": "repo://core/searcher.py#L315-L325",
+          "version": "repo-lines-v1:sha256:dbabffd01da18333ba7ffbc8479ce89c6913ed14847959dd2f911fe8b390b622:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg4YWIwZmYzZTI4Nzc2NzhkNzYyMzc4MTgyYTk5MzUwMmE2NmE4ZGRlNGJiZGJiY2QyYWNmZTg2ZDEzOTNkNGEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNmMDRlNmNiMGYyZTIwZDE5OTg3ZWFiZmE4NjFhOWYxYmNjNmU0MGU4NGE4ZGQzZjNlMWEyZDY2NmZlZGMwMDciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjUyZTllYjY5NGUzZDBiNTJlNDMyM2ZiMzM4ZmZhNDg0NmExN2FkNTMyOTE0OWU2MTFkYmIyMGRmZDRkMWIxODUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVkOWZiOThjM2E0ZDQ4ZGQ4ZjVkNWI2NDM1N2NjZTRmZDk2M2YwZjA3MzI0NzU0MzEzZjZkYzE4ODg1NzZlMmIifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-10-27T03:41:19.738Z"
+  }
+}

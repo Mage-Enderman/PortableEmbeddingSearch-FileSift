@@ -20,3 +20,5 @@ data/*
 .idea/
 *.swp
 Thumbs.db
+DigUp/
+DigUp

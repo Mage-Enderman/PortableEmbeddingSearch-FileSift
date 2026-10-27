@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "pages": {
+    "/openwiki/architecture/pipeline.md": {
+      "pageVersion": "sha256:7b1843211a250504642d58f59469892b532d2bcd8b7f43f51e6b5da495095ca2",
+      "completedBy": "antigravity",
+      "completedRunId": "171846fc-8d98-4614-a946-f8f821dea7cd",
+      "gitHead": "7eb9125ed03c5daba787dee16e863918791200ef",
+      "sourceFingerprint": "sha256:8aea9f33b0630a2c29cfd5c238f71dfa316a1ec9446a1cea87e239d45d46cf78"
+    },
+    "/openwiki/embedding/multimodal.md": {
+      "pageVersion": "sha256:b2cc694aa85da0be47e9fe93708ac81f226caba750e2072b82b9cc3199c5a75a",
+      "completedBy": "antigravity",
+      "completedRunId": "171846fc-8d98-4614-a946-f8f821dea7cd",
+      "gitHead": "7eb9125ed03c5daba787dee16e863918791200ef",
+      "sourceFingerprint": "sha256:8aea9f33b0630a2c29cfd5c238f71dfa316a1ec9446a1cea87e239d45d46cf78"
+    },
+    "/openwiki/interface/desktop-and-api.md": {
+      "pageVersion": "sha256:b8bd63a3c07e04db2fd260d2e91f2c712d4d658850489a38e4cd9d5441808c09",
+      "completedBy": "antigravity",
+      "completedRunId": "171846fc-8d98-4614-a946-f8f821dea7cd",
+      "gitHead": "7eb9125ed03c5daba787dee16e863918791200ef",
+      "sourceFingerprint": "sha256:8aea9f33b0630a2c29cfd5c238f71dfa316a1ec9446a1cea87e239d45d46cf78"
+    },
+    "/openwiki/quickstart.md": {
+      "pageVersion": "sha256:de6704587ea44fc732f9f4f54742b4a929b3094f1324867ebf159de4e2411b90",
+      "completedBy": "antigravity",
+      "completedRunId": "171846fc-8d98-4614-a946-f8f821dea7cd",
+      "gitHead": "7eb9125ed03c5daba787dee16e863918791200ef",
+      "sourceFingerprint": "sha256:8aea9f33b0630a2c29cfd5c238f71dfa316a1ec9446a1cea87e239d45d46cf78"
+    },
+    "/openwiki/storage/index-and-search.md": {
+      "pageVersion": "sha256:a91afcde3ddd589f5f10156c019e842e40b92c96f3c33535a8466ce94635f81e",
+      "completedBy": "antigravity",
+      "completedRunId": "171846fc-8d98-4614-a946-f8f821dea7cd",
+      "gitHead": "7eb9125ed03c5daba787dee16e863918791200ef",
+      "sourceFingerprint": "sha256:8aea9f33b0630a2c29cfd5c238f71dfa316a1ec9446a1cea87e239d45d46cf78"
+    }
+  }
+}

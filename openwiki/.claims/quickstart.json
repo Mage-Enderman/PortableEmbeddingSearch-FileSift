@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:de6704587ea44fc732f9f4f54742b4a929b3094f1324867ebf159de4e2411b90",
+  "claims": [
+    {
+      "id": "claim_cf28cdb88ffa4eff9e480288203c02d6",
+      "statement": "FileSift provides a unified command line interface in main.py supporting dedicated indexing, natural language search, and desktop launch modes.",
+      "evidence": [
+        {
+          "resource": "repo://main.py#L44-L61",
+          "version": "repo-lines-v1:sha256:364e587f9929a34025a154c57e7276c949d322b1540a527e971abdcc0295e6ea:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNjNWI5NDg0N2MxMDUzYTZmMGRkYjIwMDc2N2ZhMDA2NDJhZWRlMTRmMWUwZjBhNDIyZjJmYWM4NGM2ZDI2ZjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZiMWM3YjRiNGUwMjFmMjc5M2Y2MTc4YjFlOGQwMTBjMmVhMTA4ZWY4NjYxY2JjZDU1NzljNTdjOWUyZWNiYjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImRhYzc1MjJlOTdiMWI3OTdmYWU0NWU1ZGY2NzVjMDI5YjhhZTA3ODg1ZGVhNjE1YTk2ODEwNGQ0YmU3MmQyN2QifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9a8055265c12445caac27a0691e4a19e",
+      "statement": "Configuration parameters including indexed folders, exclusion patterns, file extensions, and device settings are persisted in data/config.json via AppConfig.",
+      "evidence": [
+        {
+          "resource": "repo://core/config.py#L60-L84",
+          "version": "repo-lines-v1:sha256:ea0364c414aa96c86ade398f64e65243175eb7e0cf86e302f131986610d16f12:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJhYTFhNDNkYjM0OGQ3YTFlMjQ0YzljODQxMjA1ZTZhMjljZDFlMjhjZjM4MTBkNmE0ZDY5YjM3M2YzMjQ1MzAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBjZjQ1YzU0YTFmMWZlMmFkMTNjM2QwNjg2OGYwYTg4NzE1OTZiNGE1ZGM5YTVlY2FlYTZjYjgyNTc1MWQ5MTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk5NmYyMjZlYmYxZWFiZTYzZWIzMDYwOTI3NTIzYjNmNzk2YTI1NWZjYTA0OTAxNDQ3YzJkMGViYWZjMmRkMzUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_69b5d0d51ad241d19b1086740d966ee3",
+      "statement": "All runtime state, cached models, SQLite databases, and thumbnails are contained within the data/ directory for self-contained portability.",
+      "evidence": [
+        {
+          "resource": "repo://core/config.py#L8-L21",
+          "version": "repo-lines-v1:sha256:c817530d8a1a23632990c1397864d5b19f0ce2c9f29fc112812d40d7f7e4f84f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYyNGU5ZDg1ZmNhMDAwNjU2YWQyN2NmNDljYTBmOWEyYTI5ZWIzZDAyNWRhNzUxYmQ1OThjZTYzMjNiODcxODQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ5NTVkNTJlM2MzNWVhYTJlOTlkYWVkMWI2ODkwODBmZjVjOGM4YjAxODVmYmVjYTYzYzk5NmY1OTJjM2M2ZTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImMxZDE5MTUwM2VhMTk3MWQ0OTk5YjkwNDZhYmI1ZmNhZjE2MDYyYzRiMzVjNWM4MjA2NTI4YTA1NWExMzdjOTQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8da59efb76994cc19d12d0928400d47b",
+      "statement": "One-click batch scripts configure dependencies (setup.bat) and launch the app in either desktop standalone window mode (run.bat) or browser mode (run_browser.bat).",
+      "evidence": [
+        {
+          "resource": "repo://run.bat#L1-L15",
+          "version": "repo-lines-v1:sha256:3b91586af2d7000d1af62adf05795b54c460c87441ebcb4386cc35a303eb9bfd:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMxMzRiMmY4NTQxNWJhNWNmY2UzZTNmZTQ3NDU2ODgzMzU3NDVhOWJiMjIxNTJhYzhmNWM3N2YxOTBkOGFlZTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM1Yjk4MzFhYmVjOWVlOThkMzZjZDQzYWFiYzliMWZiYWZlNzIxZDIyNGY3MDRkYzAzYzY3NTVhMDlmMmY5NzYifQ"
+        },
+        {
+          "resource": "repo://run_browser.bat#L1-L8",
+          "version": "repo-lines-v1:sha256:800221498612dc6e88b899f6ea27c3542b0b1533afffb61049446501eff6a897:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzEzNGIyZjg1NDE1YmE1Y2ZjZTNlM2ZlNDc0NTY4ODMzNTc0NWE5YmIyMjE1MmFjOGY1Yzc3ZjE5MGQ4YWVlMyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOWIzOWUwMjJlMGQ4NTQxMjAwMDNkNzkwYzI4Yjc1OTYyZWRkMzAzNzU2ZDUxMzMzZGY3NDVjZmI4NmVhMTFjZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjUxMTE0MWQwM2U3ZDU5NjlkNDMxN2VhNDFmNjU5MjA2ZDZhYTUyODhiMDYwMjliODBjMmUyMDZhMTIzMzdhNyJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-10-27T03:41:19.738Z"
+  }
+}
