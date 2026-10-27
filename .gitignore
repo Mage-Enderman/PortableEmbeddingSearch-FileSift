@@ -1,0 +1,22 @@
+# Virtual environment
+.venv/
+venv/
+ENV/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+
+# Portable user data and models
+data/*
+!data/.gitkeep
+
+# IDE and OS
+.vscode/
+.idea/
+*.swp
+Thumbs.db
